@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button class="button" id="grey">grey</button>
+    <button class="button" id="red">red</button>
+    <button class="button" id="green">green</button>
+    <button class="button" id="blue">blue</button>
+    <button class="button" id="yellow">yellow</button>
+</body>
+<script>
+    const buttons = document.querySelectorAll('.button')
+    const body = document.querySelector('.body')
+
+    buttons.forEach(function(button){
+        console.log(button);
+        
+     button.addEventListener("click",function(e){
+        console.log(e);
+        console.log(e.target);
+
+     if(e.target.id == 'grey'){
+        document.body.style.background = e.target.id
+     }
+     if(e.target.id == 'red'){
+        document.body.style.background  = e.target.id
+     }
+     if(e.target.id == 'green'){
+       document.body.style.background  = e.target.id
+     }
+     if(e.target.id == 'blue'){
+        document.body.style.background  = e.target.id
+     }
+     if(e.target.id == 'yellow'){
+       document.body.style.background  = e.target.id
+     } 
+        
+     });
+    });
+</script>
+</html>

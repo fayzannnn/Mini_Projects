@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jackpot Game</title>
+    <style>
+        .h1 {
+            text-align: center;
+        }
+
+        .input {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        #message {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <marquee>JACKPOT!! JACKPOT!! JACKPOT!!</marquee>
+    <h1 class="h1">Guess the number to win JACKPOT!!</h1>
+
+    <form class="input" id="guessForm">
+        <input
+            id="guessInput"
+            type="number"
+            min="1"
+            max="100"
+            placeholder="Enter a number"
+            required
+        >
+        <button type="submit">Submit</button>
+        <select id="difficulty" aria-label="Difficulty">
+            <option value="easy" selected>Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+    </form>
+
+    <p id="message" aria-live="polite"></p>
+
+    <script>
+        const jackpot = Math.floor(Math.random() * 100) + 1;
+        console.log(jackpot);
+
+        let attempts = 0;
+
+        const attemptDifficulty = {
+            easy: 15,
+            medium: 10,
+            hard: 5
+        };
+
+        const form = document.getElementById("guessForm");
+        const guessInput = document.getElementById("guessInput");
+        const message = document.getElementById("message");
+        const difficultySelector = document.getElementById("difficulty");
+        const submitButton = form.querySelector("button");
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const guess = Number(guessInput.value);
+
+            if (!Number.isInteger(guess) || guess < 1 || guess > 100) {
+                message.textContent = "Please enter a whole number from 1 to 100.";
+                return;
+            }
+
+            difficultySelector.disabled = true;
+            attempts++;
+
+            const maxAttempts = attemptDifficulty[difficultySelector.value];
+
+            if (guess > jackpot) {
+                message.textContent = `Jackpot is less than ${guess}.`;
+            } else if (guess < jackpot) {
+                message.textContent = `Jackpot is greater than ${guess}.`;
+            } else {
+                message.textContent = "JACKPOT!! You guessed it right!";
+                guessInput.disabled = true;
+                submitButton.disabled = true;
+                return;
+            }
+
+            if (attempts >= maxAttempts) {
+                message.textContent += " You used all your attempts.";
+                guessInput.disabled = true;
+                submitButton.disabled = true;
+            } else {
+                message.textContent += ` Attempts left: ${maxAttempts - attempts}.`;
+                guessInput.value = "";
+                guessInput.focus();
+            }
+        });
+    </script>
+</body>
+</html>
